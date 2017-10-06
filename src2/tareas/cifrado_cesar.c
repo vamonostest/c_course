@@ -10,13 +10,32 @@
 
 void cifrar(string mensaje, int c);
 void imprimir_caracter(char ch, int c);
+int validar_numero(string num);
 int main(int argc, string argv[]) {
     if(argc == 2) {
-        int c = atoi(argv[1]);
+        int c = validar_numero(argv[1]);
         printf("mensaje inicial: ");
         string mensaje_inicial = get_string();
         cifrar(mensaje_inicial, c);
     }
+}
+
+int validar_numero(string num) {
+    bool isNum = true;
+    for(int i = 0, n = strlen(num); i < n; i++) {
+        if(!isdigit(num[i])) {
+            isNum = false;
+            break;
+        }
+    }
+    if(isNum) {
+        return atoi(num);
+    }
+    else {
+        printf("%s is not a number, enter valid number: ", num);
+        return get_int();
+    }
+
 }
 
 void cifrar(string mensaje, int c) {
