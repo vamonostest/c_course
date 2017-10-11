@@ -11,12 +11,18 @@
 void cifrar(string mensaje, int c);
 void imprimir_caracter(char ch, int c);
 int validar_numero(string num);
+
 int main(int argc, string argv[]) {
     if(argc == 2) {
         int c = validar_numero(argv[1]);
         printf("mensaje inicial: ");
         string mensaje_inicial = get_string();
         cifrar(mensaje_inicial, c);
+        return 0;
+    }
+    else {
+        printf("Usage:  ./cifrado_cesar k\n");
+        return 1;
     }
 }
 
