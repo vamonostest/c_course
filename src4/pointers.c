@@ -16,4 +16,15 @@ int main(void)
     {
         printf("%c\n", *(s+i));
     }
+
+    int a = 5;
+    int *p = &a;
+    int *q = NULL;
+
+    printf("%i\n", a);
+    printf("%p\n", p);
+    printf("%i\n", *p);
+    printf("%p\n", q);
+    printf("%i\n", *q);
+    printf("Hello world!");
 }
