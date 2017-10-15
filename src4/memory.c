@@ -1,5 +1,5 @@
 // http://valgrind.org/docs/manual/quick-start.html#quick-start.prepare.
-       
+
 #include <stdlib.h>
 
 void f(void)
