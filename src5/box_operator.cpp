@@ -1,74 +1,76 @@
-#include<string>
 #include <iostream>
-
 using namespace std;
 
-class Caja {
-    private:
-        float largo;
-        float ancho;
-        float profundo;
+class Box {
+   public:
+      double getVolume(void) {
+         return length * breadth * height;
+      }
+      void setLength( double len ) {
+         length = len;
+      }
+      void setBreadth( double bre ) {
+         breadth = bre;
+      }
+      void setHeight( double hei ) {
+         height = hei;
+      }
+      double getLength(  ) {
+         return length;
+      }
+      double getBreadth(  ) {
+         return breadth;
+      }
+      double getHeight( double hei ) {
+         return height;
+      }
 
-    public:
-        Caja() {
-            cout<< "Llamando el constructor"<<endl;
-            largo = 1.0;
-            ancho = 1.0;
-            profundo = 1.0;
-        }
-        Caja(float l, float a, float p) {
-            cout<< "Llamando el constructor con parametros."<<endl;
-            largo = l;
-            ancho = a;
-            profundo = p;
-        }
-        ~Caja() {
-            cout << "Llamando el destroyer! "<<endl;
-        }
-        Caja operator+(const Box& b) {
-            Caja box;
-            box.set_largo(this->get_largo() + b.get_largo());
-            box.set_ancho(this->get_ancho() + b.get_ancho());
-            box.set_profundo(this->get_profundo() + b.get_profundo());
-            return box;
-        }
-        void set_largo(float l) {
-            this->largo = l;
-        }
-        void set_ancho(float a) {
-            this->ancho = a;
-        }
-        void set_profundo(float p) {
-            this->profundo = p;
-        }
-        float get_largo() {
-            return this->largo;
-        }
-        float get_ancho() {
-            return this->ancho;
-        }
-        float get_profundo() {
-            return this->profundo;
-        }
-        float sacar_volumen() {
-            return ancho * largo * profundo;
-        }
+      // Overload + operator to add two Box objects.
+      Box operator+(const Box& b) {
+         Box box;
+         box.setLength( this->length + b.length );
+         box.setBreadth( this->breadth + b.breadth );
+         box.setHeight( this->height + b.height );
+         return box;
+      }
 
-
+   private:
+      double length;      // Length of a box
+      double breadth;     // Breadth of a box
+      double height;      // Height of a box
 };
 
-int main(void) {
-    Caja caja1;
-    Caja caja2(2.1, 2.2, 2.3);
+// Main function for the program
+int main() {
+   Box Box1;                // Declare Box1 of type Box
+   Box Box2;                // Declare Box2 of type Box
+   Box Box3;                // Declare Box3 of type Box
+   double volume = 0.0;     // Store the volume of a box here
 
-    Caja caja3 = caja1 + caja2;
+   // box 1 specification
+   Box1.setLength(6.0);
+   Box1.setBreadth(7.0);
+   Box1.setHeight(5.0);
 
+   // box 2 specification
+   Box2.setLength(12.0);
+   Box2.setBreadth(13.0);
+   Box2.setHeight(10.0);
 
+   // volume of box 1
+   volume = Box1.getVolume();
+   cout << "Volume of Box1 : " << volume <<endl;
 
-    cout << "El largo es "<< caja1.get_largo() << ", el ancho es " << caja1.get_ancho() << " y de profundo: "<< caja1.get_profundo() << endl;
-    cout<< "El volumen de la caja 1 es: " << caja1.sacar_volumen() << endl;
+   // volume of box 2
+   volume = Box2.getVolume();
+   cout << "Volume of Box2 : " << volume <<endl;
 
+   // Add two object as follows:
+   Box3 = Box1 + Box2;
 
-    cout << "El largo es "<< caja2.get_largo() << ", el ancho es " << caja2.get_ancho() << " y de profundo: "<< caja2.get_profundo() << endl;
-    cout<< "El volumen de la caja 2 es: " << caja2.sacar_volumen() << endl;
+   // volume of box 3
+   volume = Box3.getVolume();
+   cout << "Volume of Box3 : " << volume <<endl;
+
+   return 0;
 }
