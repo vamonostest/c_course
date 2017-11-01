@@ -34,6 +34,18 @@ class Usuario {
         }
         Usuario() {
         }
+        string getNombre() {
+            return nombre;
+        }
+        string getApellido() {
+            return apellido;
+        }
+        string getCelular() {
+            return celular;
+        }
+        int getClaveUsuario() {
+            return clave_usuario;
+        }
 
 };
 
@@ -109,6 +121,21 @@ class Vuelo {
         Vuelo() {
 
         }
+        int getClaveVuelo() {
+            return clave_vuelo;
+        }
+        string getOrigen() {
+            return origen;
+        }
+        string getDestino() {
+            return destino;
+        }
+        Dates getFecha() {
+            return fecha;
+        }
+        int getAsientosDisponibles() {
+            return asientos_disponibles;
+        }
 };
 
 class Reservacion {
@@ -124,7 +151,14 @@ class Reservacion {
         Reservacion() {
 
         }
+        int getClaveUsuario() {
+            return clave_usuario;
+        }
+        int getClaveVuelo() {
+            return clave_vuelo;
+        }
 };
+
 
 Usuario *current_user = NULL;
 Reservacion *current_reservac = NULL;
@@ -204,13 +238,41 @@ void login() {
     buffer_user_info(name, lastname);
 }
 
+int exists(string name, string lastname) {
+    bool found = false;
+    for(int i = 0; i < user_counter; i++) {
+        if(users[i].getNombre() == name && users[i].getApellido() == lastname) {
+            found = true;
+            return i;
+            break;
+        }
+    }
+    return -1;
+}
 void buffer_user_info(string name, string lastname) {
     //checar si usuario existe
-    //en caso positivo, copiar todas las reservas a su lista
-    //en caso negativo, agregar su nombre a la lista de usuarios
-    //pidiendo su numero de celular, y autogenerando la clave de usuario
+    current_reservac = new Reservacion[50];
+    current_reservac_counter = 0;
+    int ex = exists(name, lastname);
+    if(ex >= 0) {
+        current_user = &users[ex];
 
-
+            for(int j = 0; j < reserva_counter; j++) {
+                if(reservas[j].getClaveUsuario() == (*current_user).getClaveUsuario()) {
+                    current_reservac[current_reservac_counter] = reservas[j];
+                    current_reservac_counter++;
+                }
+            }
+    }
+    else {
+        //no existe
+            cout<< "Ingresa tu celular: ";
+            cin>> celular;
+            Usuario myUser(user_counter + 1, name, lastname, celular);
+            current_user = &myUser;
+            users[user_counter] = *current_user;
+            user_counter++;
+    }
 }
 
 void display_main_menu() {
@@ -266,7 +328,7 @@ void leer_base_datos() {
     //construir el objeto
     //agregarlo a la lista
     //cerrar archivo de db.
-    infile.open("usuario_db.csv");
+    infile.open("vuelos_db.csv");
      int clave_vuelo;
      string origen;
      string destino;
